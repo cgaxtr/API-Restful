@@ -8,13 +8,42 @@ import java.util.List;
 @Path("/user")
 public class UserService {
 
+    private UserDAO userDAO = new UserDAO();
+
+
+    @POST
+    @Path("/register")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public User register(User user){
+
+        userDAO.register(user);
+
+        return user;
+    }
+
+    @POST
+    @Path("/login")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public User login(Credential credential){
+        User u;
+
+         u = userDAO.login(credential);
+
+        return u;
+    }
+
+
+
+    /* debug stuff
     @GET
     @Path("/user/{id}")
     @Produces("application/json")
     public User user(@PathParam("id") int id){
         User u = new User();
         u.setId(id);
-        u.setNombre("Carlos");
+        u.setName("Carlos");
 
         return u;
     }
@@ -26,12 +55,12 @@ public class UserService {
         List<User> list = new ArrayList<User>();
         User u = new User();
         u.setId(1);
-        u.setNombre("Carlos");
+        u.setName("Carlos");
         list.add(u);
 
         User u2 = new User();
         u2.setId(2);
-        u2.setNombre("Carlos");
+        u2.setName("Carlos");
         list.add(u2);
 
         return list;
@@ -49,8 +78,8 @@ public class UserService {
             ResultSet rs = stmt.executeQuery("SELECT * FROM test");
             while ( rs.next() ) {
                 User u = new User();
-                u.setNombre(rs.getString("nombre"));
-                u.setApellido(rs.getString("apellido"));
+                u.setName(rs.getString("nombre"));
+                u.setSurname(rs.getString("apellido"));
                 list.add(u);
             }
         } catch (SQLException e) {
@@ -58,18 +87,6 @@ public class UserService {
         }
 
         return list;
-    }
-
-    @POST
-    @Path("/register")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public User register(User user){
-
-
-        System.out.println("nombre: " + user.getNonmbre());
-        System.out.println("apellido: " + user.getApellido());
-        return user;
     }
 
     @GET
@@ -86,4 +103,5 @@ public class UserService {
     public String secured(){
         return "Secured";
     }
+    */
 }

@@ -12,7 +12,7 @@ public class DBConnection {
         String host = "127.0.0.1";
         String user = "root";
         String pass = "";
-        String db = "java";
+        String db = "fea";
 
         try {
             Class.forName("com.mysql.jdbc.Driver");

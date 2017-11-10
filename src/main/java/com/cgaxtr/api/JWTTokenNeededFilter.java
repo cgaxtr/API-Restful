@@ -17,9 +17,6 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-/**
- * Created by Antonio on 04/08/2017.
- */
 @Provider
 @JWTTokenNeeded
 @Priority(Priorities.AUTHENTICATION)
