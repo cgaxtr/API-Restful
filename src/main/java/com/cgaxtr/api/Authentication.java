@@ -7,15 +7,13 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.sql.*;
 
-@Path("login")
 public class Authentication {
-
+    /*
     @POST
     @Consumes("application/json")
     @Produces("application/json")
@@ -45,7 +43,8 @@ public class Authentication {
         return Response.ok().entity(token).build();
     }
 
-    private String issueToken(String email){
+    */
+    public static String issueToken(String email){
 
         String token = null;
 

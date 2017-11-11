@@ -1,9 +1,15 @@
-package com.cgaxtr.api;
+package com.cgaxtr.api.DAOs;
+
+import com.cgaxtr.api.Credential;
+import com.cgaxtr.api.DBConnection;
+import com.cgaxtr.api.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -13,7 +19,7 @@ public class UserDAO {
         this.con = DBConnection.getInstance().getConnection();
     }
 
-    boolean register(User user){
+    public boolean register(User user){
 
         String queryInsert = " INSERT INTO players (name, surname, email, password) VALUE (?, ?, ?, ?)";
 
@@ -34,7 +40,7 @@ public class UserDAO {
     }
 
 
-    User login(Credential credential){
+    public User login(Credential credential){
 
         String query = "SELECT * FROM players WHERE email=? and password=?";
 
@@ -61,5 +67,54 @@ public class UserDAO {
 
 
         return null;
+    }
+
+    public List<User> allUsers(){
+        List<User> l = new ArrayList<User>();
+        String query = "SELECT * FROM players";
+
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setSurname(rs.getString("surname"));
+                u.setEmail(rs.getString("email"));
+                l.add(u);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return l;
+    }
+
+    public User getUser(int id) {
+        User u = null;
+        String query = "SELECT * FROM players WHERE id = ?";
+
+        try {
+
+            PreparedStatement stm = con.prepareStatement(query);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            rs.last();
+
+            if (rs.getRow() == 1) {
+                u = new User();
+                u.setId(rs.getInt("id"));
+                u.setName(rs.getString("name"));
+                u.setSurname(rs.getString("surname"));
+                u.setEmail(rs.getString("email"));
+                return u;
+            }
+
+        } catch (SQLException e) {
+
+        }
+        return u;
     }
 }
